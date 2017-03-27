@@ -5,8 +5,10 @@
  */
 package com.sv.udb.controlador;
 
+import com.mysql.jdbc.Blob;
 import com.sv.udb.modelo.Equipos;
 import com.sv.udb.recursos.Conexion;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,9 +24,10 @@ public class EquiposCtrl {
         boolean resp = false;
         Connection cn = new Conexion().getConn();
         try {
-            PreparedStatement cmd = cn.prepareStatement("INSERT INTO equipos VALUES(NULL, ?, ?)");
+            PreparedStatement cmd = cn.prepareStatement("INSERT INTO equipos VALUES(NULL, ?, ?, ?)");
             cmd.setString(1, obje.getNombEqui());
             cmd.setString(2, obje.getDescEqui());
+            cmd.setBytes(3, obje.getLogoEqui());
             cmd.executeUpdate();
             resp = true;
             
@@ -127,7 +130,7 @@ public class EquiposCtrl {
             ResultSet rs = cmd.executeQuery();
             while (rs.next())
             {
-                resp.add(new Equipos(rs.getInt(1), rs.getString(2), rs.getString(3)));
+                resp.add(new Equipos(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getBytes(4)));
             }
         } catch (Exception ex) {
             System.err.println("Error: " + ex.getMessage());
@@ -161,7 +164,7 @@ public class EquiposCtrl {
             ResultSet rs = cmd.executeQuery();
             if(rs.next())
             {
-                resp = new Equipos(rs.getInt(1), rs.getString(2), rs.getString(3));
+                resp = new Equipos(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getBytes(4));
             }
         } catch (Exception ex) {
             System.err.println("Error: " + ex.getMessage());

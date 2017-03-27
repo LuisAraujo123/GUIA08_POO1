@@ -5,6 +5,9 @@
  */
 package com.sv.udb.modelo;
 
+import java.sql.Blob;
+
+
 /**
  *
  * @author bernardo
@@ -13,17 +16,19 @@ public class Equipos {
     private int codiEqui;
     private String nombEqui;
     private String descEqui;
-    
+    private byte[] logoEqui;
+            
     public Equipos() {
         
     }
 
-    public Equipos(int codiEqui, String nombEqui, String descEqui) {
+    public Equipos(int codiEqui, String nombEqui, String descEqui, byte[] logoEqui) {
         this.codiEqui = codiEqui;
         this.nombEqui = nombEqui;
         this.descEqui = descEqui;
+        this.logoEqui = logoEqui;
     }
-
+    
     public int getCodiEqui() {
         return codiEqui;
     }
@@ -48,9 +53,19 @@ public class Equipos {
         this.descEqui = descEqui;
     }
 
+    public byte[] getLogoEqui() {
+        return logoEqui;
+    }
+
+    public void setLogoEqui(byte[] logoEqui) {
+        this.logoEqui = logoEqui;
+    }
+
     @Override
     public String toString() {
         return this.nombEqui;
     }
+
+    
     
 }

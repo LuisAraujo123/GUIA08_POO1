@@ -7,18 +7,29 @@ package com.sv.udb.vista;
 
 import com.sv.udb.controlador.EquiposCtrl;
 import com.sv.udb.modelo.Equipos;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author bernardo
  */
+
+@MultipartConfig
 @WebServlet(name = "EquiposServ", urlPatterns = {"/EquiposServ"})
 public class EquiposServ extends HttpServlet {
 
@@ -31,6 +42,9 @@ public class EquiposServ extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         boolean esValido = request.getMethod().equals("POST");
@@ -48,6 +62,24 @@ public class EquiposServ extends HttpServlet {
                     Equipos obje = new Equipos();
                     obje.setNombEqui(request.getParameter("nomb"));
                     obje.setDescEqui(request.getParameter("desc"));
+                    
+                    System.err.println(request.getPart("imag"));
+                    Part filePart = request.getPart("imag");
+                    byte[] foto = null;
+                    System.err.println(filePart + " esto es");
+                    int tamaFoto = (int)filePart.getSize();
+                    System.err.println("tomo la imagen");
+                    foto = new byte[tamaFoto];
+                    try(DataInputStream imagen = new DataInputStream(filePart.getInputStream())) 
+                    {
+                        imagen.readFully(foto);
+                    }
+                    catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if (tamaFoto > 0) {
+                        obje.setLogoEqui(foto);
+                    }
                     System.err.println("Extra");
                     if (new EquiposCtrl().guar(obje))
                     {
@@ -58,7 +90,11 @@ public class EquiposServ extends HttpServlet {
                     {
                         mens = "Error al guardar";
                         request.setAttribute("estModi", "disabled");
-                    }    
+                    }
+                    System.err.println(request.getParameter("imag"));
+                    
+                    
+                    
                 }
                 else if (CRUD.equals("Consultar"))
                 {
@@ -156,6 +192,7 @@ public class EquiposServ extends HttpServlet {
         }
         
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
