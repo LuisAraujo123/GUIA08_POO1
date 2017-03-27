@@ -20,7 +20,7 @@
             <li><a href='jugadores.jsp'>Jugadores</a></li>
             <li><a href='partidos.jsp'>Partidos</a></li>
         </ul>
-        <div class="row container ">
+        <div class="row container z-depth-5">
             <h1 class="col s12 m6 offset-m3">${mensAler}</h1>
             <form method="POST" action="EquiposServ" name="Demo" class="col s12 m6 offset-m3" enctype="multipart/form-data">
             <label>Código:&ensp;&ensp;&ensp;&ensp; </label><input readonly type="text" name="codi" id="codi" value="${codi}"><br>
@@ -35,7 +35,6 @@
                   <input class="file-path validate" type="text">
                 </div>
             </div>
-               
             <input ${estGuar} type="submit" name="btonEqui" value="Guardar">
             <input ${estModi} type="submit" name="btonEqui" value="Modificar">
         </form>
@@ -46,6 +45,7 @@
                 <th>Cons</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
+                <th>Logo</th>
             </tr>
             <%
                 for(Equipos temp : new EquiposCtrl().consTodo())

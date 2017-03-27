@@ -25,12 +25,13 @@ public class JugadoresCtrl {
         boolean resp = false;
         Connection cn = new Conexion().getConn();
         try {
-            PreparedStatement cmd = cn.prepareStatement("INSERT INTO Jugadores VALUES(NULL, ?, ?, ?, ?, ?)");
+            PreparedStatement cmd = cn.prepareStatement("INSERT INTO Jugadores VALUES(NULL, ?, ?, ?, ?, ?, ?)");
             cmd.setInt(1, obje.getCodiEqui());
             cmd.setString(2, obje.getNombJuga());
             cmd.setString(3, obje.getEdadJuga());
             cmd.setInt(4, obje.getAltuJuga());
             cmd.setString(5, obje.getPesoJuga());
+            cmd.setBytes(6, obje.getFotoJuga());
             cmd.executeUpdate();
             resp = true;
             
@@ -130,11 +131,11 @@ public class JugadoresCtrl {
         List<Jugadores> resp = new ArrayList<>();
         Connection cn = new Conexion().getConn();
         try {
-            PreparedStatement cmd = cn.prepareStatement("select codi_juga, jugadores.codi_equi, nomb_juga, nomb_equi, edad_juga, altu_juga, peso_juga from jugadores,equipos where jugadores.codi_equi = equipos.codi_equi;");
+            PreparedStatement cmd = cn.prepareStatement("select codi_juga, jugadores.codi_equi, nomb_juga, nomb_equi, edad_juga, altu_juga, peso_juga, imag_juga from jugadores,equipos where jugadores.codi_equi = equipos.codi_equi;");
             ResultSet rs = cmd.executeQuery();
             while (rs.next())
             {
-                resp.add(new Jugadores(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7)));
+                resp.add(new Jugadores(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getBytes(8)));
             }
         } catch (Exception ex) {
             System.err.println("Error: " + ex.getMessage());
@@ -164,12 +165,12 @@ public class JugadoresCtrl {
         Jugadores resp = null;
         Connection cn = new Conexion().getConn();
         try {
-            PreparedStatement cmd = cn.prepareStatement("select codi_juga, jugadores.codi_equi, nomb_juga, nomb_equi, edad_juga, altu_juga, peso_juga from jugadores,equipos where jugadores.codi_equi = equipos.codi_equi and codi_juga = ?");
+            PreparedStatement cmd = cn.prepareStatement("select codi_juga, jugadores.codi_equi, nomb_juga, nomb_equi, edad_juga, altu_juga, peso_juga, imag_juga from jugadores,equipos where jugadores.codi_equi = equipos.codi_equi and codi_juga = ?");
             cmd.setInt(1, id);
             ResultSet rs = cmd.executeQuery();
             while (rs.next())
             {
-                resp = (new Jugadores(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7)));
+                resp = (new Jugadores(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getBytes(8)));
             }
         } catch (Exception ex) {
             System.err.println("Error: " + ex.getMessage());

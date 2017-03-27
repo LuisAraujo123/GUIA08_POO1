@@ -65,7 +65,6 @@ public class EquiposServ extends HttpServlet {
                     Equipos obje = new Equipos();
                     obje.setNombEqui(request.getParameter("nomb"));
                     obje.setDescEqui(request.getParameter("desc"));
-                    
                     System.err.println(request.getPart("imag"));
                     Part filePart = request.getPart("imag");
                     byte[] foto = null;
