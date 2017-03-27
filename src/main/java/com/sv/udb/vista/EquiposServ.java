@@ -7,6 +7,7 @@ package com.sv.udb.vista;
 
 import com.sv.udb.controlador.EquiposCtrl;
 import com.sv.udb.modelo.Equipos;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.Base64;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -103,11 +106,22 @@ public class EquiposServ extends HttpServlet {
                     Equipos obje = new EquiposCtrl().consUno(codi);
                     if (obje != null)
                     {
-                        request.setAttribute("codi", obje.getCodiEqui());
-                        request.setAttribute("nomb", obje.getNombEqui());
-                        request.setAttribute("desc", obje.getDescEqui());
-                        request.setAttribute("estModi", "enable");
-                        request.setAttribute("estGuar", "disabled");
+                        try {
+                            request.setAttribute("codi", obje.getCodiEqui());
+                            request.setAttribute("nomb", obje.getNombEqui());
+                            request.setAttribute("desc", obje.getDescEqui());
+                            System.err.println("bandera de consultar");
+                            byte[] photo = obje.getLogoEqui();
+                            BufferedImage img = null;
+                            img = ImageIO.read(new ByteArrayInputStream(obje.getLogoEqui()));
+                            ImageIcon icon = new ImageIcon(img);
+                            request.setAttribute("imag", icon);
+                            request.setAttribute("estModi", "enable");
+                            request.setAttribute("estGuar", "disabled");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        
                     }
                     else
                     {

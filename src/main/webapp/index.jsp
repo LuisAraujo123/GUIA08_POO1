@@ -28,7 +28,7 @@
             <label>Descripción: </label><input type="text" name="desc" id="desc" value="${desc}"><br>
             <div class="file-field input-field">
                 <div class="btn">
-                  <span><i class="material-icons">Img</i></span>
+                  <span><i class="material-icons">image</i></span>
                   <input type="file" id="imag" name="imag" value="${imag}">
                 </div>
                 <div class="file-path-wrapper">
@@ -54,7 +54,7 @@
                     String bphoto = Base64.getEncoder().encodeToString(photo);
             %>
             <tr>
-                <td><input type="radio" name="codiEquiRadi" value="<%=temp.getCodiEqui()%>"></td>
+                <td><p><input type="radio" name="codiEquiRadi" class='with-gap' id="<%=temp.getCodiEqui()%>" value="<%=temp.getCodiEqui()%>"><label for="<%=temp.getCodiEqui()%>"></label></p></td>
                 <td><%=temp.getNombEqui()%></td>
                 <td><%=temp.getDescEqui()%></td>
                 <td><img src="data:image/*;base64,<%=bphoto%>" class="materialboxed" width="100" height="100"></td>
