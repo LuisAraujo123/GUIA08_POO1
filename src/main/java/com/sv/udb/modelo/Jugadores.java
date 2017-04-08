@@ -5,6 +5,7 @@
  */
 package com.sv.udb.modelo;
 
+
 /**
  *
  * @author bernardo
@@ -103,5 +104,4 @@ public class Jugadores {
     public String toString() {
         return this.nombJuga;
     }
-    
 }
