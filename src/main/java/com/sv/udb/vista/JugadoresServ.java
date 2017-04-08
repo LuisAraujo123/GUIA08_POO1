@@ -9,11 +9,14 @@ import com.sv.udb.controlador.JugadoresCtrl;
 import com.sv.udb.modelo.Jugadores;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.Base64;
@@ -105,6 +108,14 @@ public class JugadoresServ extends HttpServlet {
                         request.setAttribute("edad", obje.getEdadJuga());
                         request.setAttribute("altu", obje.getAltuJuga());
                         request.setAttribute("peso", obje.getAltuJuga());
+                        /*byte[] resultado = obje.getFotoJuga();
+                        BufferedInputStream stream = new BufferedInputStream(new FileInputStream(f));
+                        stream.read(resultado);
+                        response.setContentType("image/jpeg");
+                        try (OutputStream sos = response.getOutputStream()) {
+                            sos.write(resultado);
+                            sos.flush();
+                        } catch (Exception ex) { ex.printStackTrace();}*/
                         request.setAttribute("estModi", "enable");
                         request.setAttribute("estGuar", "disabled");
                     }
